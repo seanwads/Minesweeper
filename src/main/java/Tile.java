@@ -7,5 +7,7 @@ public class Tile {
     public int getAdjacentBombs() {return adjacentBombs;}
     public void setAdjacentBombs(int adjacentBombs) {this.adjacentBombs = adjacentBombs;}
 
-
+    private String displayString = "#";
+    public String GetDisplayString(){return displayString;}
+    public void SetDisplayString(String displayString) {this.displayString = displayString;}
 }

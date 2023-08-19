@@ -4,7 +4,7 @@ public class Main {
 
     public static Board board;
     private static boolean hasWon = false;
-    private static boolean isFirstTry = false;
+    private static boolean isFirstTry = true;
     public static void main(String[] args) {
 
         System.out.println("--------Minesweeper--------");
@@ -32,12 +32,20 @@ public class Main {
         System.out.println(" ");
 
         GenerateEmptyBoard(boardSize);
+
+        if (isFirstTry) {
+
+            board.PopulateBoard();
+        }
+        else {
+
+        }
+
     }
 
     private static void GenerateEmptyBoard(int boardSize){
         Tile[][] newBoardArray = new Tile[boardSize][boardSize];
-        board = new Board(newBoardArray);
-
+        board = new Board(newBoardArray, boardSize);
 
         for(int i = 0; i < boardSize; i++)
         {
@@ -48,5 +56,34 @@ public class Main {
             }
             System.out.println();
         }
+    }
+
+    private static int GetPlayerInput(){
+        int x;
+        int y;
+
+        Scanner xCoordInput = new Scanner(System.in);
+        System.out.println("Please input the co-ordinates of the tile you would like to select.");
+
+        boolean inputValidated = false;
+
+        do {
+            System.out.println("Enter your x co-ordinate:");
+
+            if(!xCoordInput.hasNextInt()){
+                System.out.println("That's not a number! Please enter your x co-ordinate as an integer:");
+                xCoordInput.next();
+            }
+            else if(xCoordInput.nextInt() > board.GetBoardSize() || xCoordInput.nextInt() < 0){
+                System.out.println("Co-ordinate out of range! Please enter your x co-ordinate within board bounds:");
+                xCoordInput.next();
+            }
+            else {
+                x = xCoordInput.nextInt();
+                inputValidated = true;
+            }
+        } while (!inputValidated);
+
+        
     }
 }

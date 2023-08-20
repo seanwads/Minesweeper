@@ -5,6 +5,8 @@ public class Main {
     public static Board board;
     private static boolean hasWon = false;
     private static boolean isFirstTry = true;
+    private static int x;
+    private static int y;
     public static void main(String[] args) {
 
         System.out.println("--------Minesweeper--------");
@@ -34,8 +36,8 @@ public class Main {
         GenerateEmptyBoard(boardSize);
 
         if (isFirstTry) {
-
-            board.PopulateBoard();
+            GetPlayerInput();
+            board.PopulateBoard(x, y);
         }
         else {
 
@@ -58,11 +60,9 @@ public class Main {
         }
     }
 
-    private static int GetPlayerInput(){
-        int x;
-        int y;
+    private static void GetPlayerInput(){
 
-        Scanner xCoordInput = new Scanner(System.in);
+        Scanner CoordInput = new Scanner(System.in);
         System.out.println("Please input the co-ordinates of the tile you would like to select.");
 
         boolean inputValidated = false;
@@ -70,20 +70,30 @@ public class Main {
         do {
             System.out.println("Enter your x co-ordinate:");
 
-            if(!xCoordInput.hasNextInt()){
+            if(!CoordInput.hasNextInt()){
                 System.out.println("That's not a number! Please enter your x co-ordinate as an integer:");
-                xCoordInput.next();
+                CoordInput.next();
             }
-            else if(xCoordInput.nextInt() > board.GetBoardSize() || xCoordInput.nextInt() < 0){
+            else if(CoordInput.nextInt() > board.GetBoardSize() || CoordInput.nextInt() < 0){
                 System.out.println("Co-ordinate out of range! Please enter your x co-ordinate within board bounds:");
-                xCoordInput.next();
+                CoordInput.next();
             }
             else {
-                x = xCoordInput.nextInt();
-                inputValidated = true;
+                x = CoordInput.nextInt();
+                System.out.println("Enter your y co-ordinate:");
+                if(!CoordInput.hasNextInt()){
+                    System.out.println("That's not a number! Please enter your y co-ordinate as an integer:");
+                    CoordInput.next();
+                }
+                else if(CoordInput.nextInt() > board.GetBoardSize() || CoordInput.nextInt() < 0){
+                    System.out.println("Co-ordinate out of range! Please enter your y co-ordinate within board bounds:");
+                    CoordInput.next();
+                }
+                else {
+                    y = CoordInput.nextInt();
+                    inputValidated = true;
+                }
             }
         } while (!inputValidated);
-
-        
     }
 }
